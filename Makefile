@@ -6,6 +6,7 @@ UTIL_FILES = $(wildcard cmd/util/*.go)
 
 util: $(CERT_TOOL_FILES)
 	mkdir -p ${BIN_DIR}
+	go get ./cmd/util/...
 	go build -o ${UTIL} ./cmd/util/...
 
 .PHONY: testdata
@@ -18,7 +19,6 @@ testdata: util
 	${UTIL} -make-ech -cert-in ${TESTDATA_DIR}/client_facing.crt -out ${TESTDATA_DIR}/ech_configs -key-out ${TESTDATA_DIR}/ech_key
 
 runner: testdata
-	go get ./...
 	go build -o ${RUNNER} ./cmd/runner/...
 
 clean:
