@@ -7,6 +7,7 @@ UTIL_FILES = $(wildcard cmd/util/*.go)
 util: $(CERT_TOOL_FILES)
 	mkdir -p ${BIN_DIR}
 	go get ./cmd/util/...
+	go get github.com/cloudflare/circl@96a0695
 	go build -o ${UTIL} ./cmd/util/...
 
 .PHONY: testdata
