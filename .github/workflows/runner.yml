@@ -7,6 +7,11 @@ name: runner
 on: push
 
 jobs:
+  build:
+    name: Build docker-compose 
+    runs-on: ubuntu-latest
+    steps:
+    - run: env SERVER_SRC=./impl-endpoints SERVER=boringssl CLIENT_SRC=./regression-endpoints CLIENT=tlsfuzzer docker-compose build
   build-and-run:
     name: Build and run interop runner
     runs-on: ubuntu-latest
