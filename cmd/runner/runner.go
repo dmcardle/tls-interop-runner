@@ -91,7 +91,7 @@ func main() {
 	if err != nil {
 		exitError := err.(*exec.ExitError)
 		log.Println(runOutput.String())
-		log.Fatal(exitError.ProcessState.ExitCode())
+		log.Println(exitError.ProcessState.ExitCode())
 	} else {
 		log.Println("Success!")
 	}
