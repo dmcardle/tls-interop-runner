@@ -62,13 +62,13 @@ func main() {
 	err := cmd.Start()
 	if err != nil {
 		log.Println(buildOut.String())
-		log.Printf("docker-compose build failed:", err)
+		log.Printf("docker-compose build failed:", err.Error())
 		os.Exit(1)
 	}
 	err = cmd.Wait()
 	if err != nil {
 		log.Println(buildOut.String())
-		log.Printf("docker-compose build failed:", err)
+		log.Printf("docker-compose build failed:", err.Error())
 		os.Exit(2)
 	}
 
@@ -87,7 +87,7 @@ func main() {
 	err = cmd.Start()
 	if err != nil {
 		log.Println(runOutput.String())
-		log.Printf("docker-compose up failed:", err)
+		log.Printf("docker-compose up failed:", err.Error())
 		os.Exit(3)
 	}
 	err = cmd.Wait()
