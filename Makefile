@@ -22,6 +22,9 @@ testdata: util
 runner: testdata
 	go build -o ${RUNNER} ./cmd/runner/...
 
+interop: runner
+	${RUNNER}
+
 clean:
 	rm -fr ${BIN_DIR}
 	rm -fr ${TESTDATA_DIR}
