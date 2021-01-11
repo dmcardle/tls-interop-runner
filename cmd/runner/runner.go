@@ -62,12 +62,12 @@ func main() {
 	err := cmd.Start()
 	if err != nil {
 		log.Println(buildOut.String())
-		log.Fatal(err)
+		log.Println(err)
 	}
 	err = cmd.Wait()
 	if err != nil {
 		log.Println(buildOut.String())
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	log.Printf("Build process %d complete, exiting\n", cmd.Process.Pid)
@@ -85,7 +85,7 @@ func main() {
 	err = cmd.Start()
 	if err != nil {
 		log.Println(runOutput.String())
-		log.Fatal(err)
+		log.Println(err)
 	}
 	err = cmd.Wait()
 	if err != nil {
