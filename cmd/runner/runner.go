@@ -81,8 +81,8 @@ func main() {
 	cmd.Stdout = runOutput
 	cmd.Env = append(cmd.Env, "SERVER_SRC=./impl-endpoints")
 	cmd.Env = append(cmd.Env, "SERVER=boringssl")
-	cmd.Env = append(cmd.Env, "CLIENT_SRC=./regression-endpoints")
-	cmd.Env = append(cmd.Env, "CLIENT=tlsfuzzer")
+	cmd.Env = append(cmd.Env, "CLIENT_SRC=./impl-endpoints")
+	cmd.Env = append(cmd.Env, "CLIENT=cloudflare-go")
 	cmd.Env = append(cmd.Env, "TESTCASE=dc")
 	err = cmd.Start()
 	if err != nil {
