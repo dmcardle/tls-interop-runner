@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: env SERVER_SRC=./impl-endpoints SERVER=boringssl CLIENT_SRC=./regression-endpoints CLIENT=tlsfuzzer docker-compose build
+    - run: |
+            env SERVER_SRC=./impl-endpoints SERVER=boringssl CLIENT_SRC=./impl-endpoints CLIENT=cloudflare-go docker-compose build
+            env SERVER_SRC=./impl-endpoints SERVER=boringssl CLIENT_SRC=./impl-endpoints CLIENT=cloudflare-go TESTCASE=dc docker-compose up --abort-on-container-exit
   build-and-run:
     name: Build and run interop runner
     runs-on: ubuntu-latest
