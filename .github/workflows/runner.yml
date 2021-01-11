@@ -7,18 +7,18 @@ name: runner
 on: push
 
 jobs:
-  build:
-    name: Build images
+  build-and-run:
+    name: Build and run interop runner
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-go@v2
     - run: make runner
-  run:
-    needs: [ build ]
-    name: Run tests
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-go@v2
-    - run: make interop
+  # run:
+  #   needs: [ build ]
+  #   name: Run tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: actions/setup-go@v2
+  #   - run: make interop

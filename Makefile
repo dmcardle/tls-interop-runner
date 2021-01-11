@@ -1,6 +1,6 @@
 TESTDATA_DIR = testdata
 BIN_DIR = bin
-RUNNER = ${BIN_DIR}/runner
+# RUNNER = ${BIN_DIR}/runner
 UTIL = ${BIN_DIR}/util
 UTIL_FILES = $(wildcard cmd/util/*.go)
 
@@ -19,11 +19,11 @@ testdata: util
 	${UTIL} -make-dc -cert-in ${TESTDATA_DIR}/example.crt -key-in ${TESTDATA_DIR}/example.key -out ${TESTDATA_DIR}/dc.txt
 	${UTIL} -make-ech -cert-in ${TESTDATA_DIR}/client_facing.crt -out ${TESTDATA_DIR}/ech_configs -key-out ${TESTDATA_DIR}/ech_key
 
-runner: testdata
-	go build -o ${RUNNER} ./cmd/runner/...
+# runner: testdata
+# 	go build -o ${RUNNER} ./cmd/runner/...
 
-interop: runner
-	${RUNNER}
+runner: testdata
+	go run ./cmd/runner/...
 
 clean:
 	rm -fr ${BIN_DIR}
