@@ -11,6 +11,7 @@ jobs:
     name: Build docker-compose 
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - run: env SERVER_SRC=./impl-endpoints SERVER=boringssl CLIENT_SRC=./regression-endpoints CLIENT=tlsfuzzer docker-compose build
   build-and-run:
     name: Build and run interop runner
