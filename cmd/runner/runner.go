@@ -62,12 +62,14 @@ func main() {
 	err := cmd.Start()
 	if err != nil {
 		log.Println(buildOut.String())
-		log.Println(err)
+		log.Printf("docker-compose build failed:", err)
+		os.Exit(1)
 	}
 	err = cmd.Wait()
 	if err != nil {
 		log.Println(buildOut.String())
-		log.Println(err)
+		log.Printf("docker-compose build failed:", err)
+		os.Exit(2)
 	}
 
 	log.Printf("Build process %d complete, exiting\n", cmd.Process.Pid)
@@ -85,7 +87,8 @@ func main() {
 	err = cmd.Start()
 	if err != nil {
 		log.Println(runOutput.String())
-		log.Println(err)
+		log.Printf("docker-compose up failed:", err)
+		os.Exit(3)
 	}
 	err = cmd.Wait()
 	if err != nil {
