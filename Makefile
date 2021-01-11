@@ -4,9 +4,10 @@ RUNNER = ${BIN_DIR}/runner
 UTIL = ${BIN_DIR}/util
 UTIL_FILES = $(wildcard cmd/util/*.go)
 
+# TODO(caw): pinning this dependency here is awful -- surely there's a better way!
 util: $(CERT_TOOL_FILES)
 	mkdir -p ${BIN_DIR}
-	go get github.com/cloudflare/circl@96a0695
+	go get github.com/cloudflare/circl@96a0695 
 	go build -o ${UTIL} ./cmd/util/...
 
 .PHONY: testdata
