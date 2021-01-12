@@ -1,6 +1,7 @@
 TESTDATA_DIR = testdata
 BIN_DIR = bin
 # RUNNER = ${BIN_DIR}/runner
+PYRUNNER = runner.py
 UTIL = ${BIN_DIR}/util
 UTIL_FILES = $(wildcard cmd/util/*.go)
 
@@ -24,6 +25,9 @@ testdata: util
 
 runner: testdata
 	go run ./cmd/runner/...
+
+pyrunner: testdata
+	python3 ${PYRUNNER}
 
 clean:
 	rm -fr ${BIN_DIR}
