@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: make pyruner
+    - run: make pyrunner
   # run:
   #   needs: [ build ]
   #   name: Run tests
