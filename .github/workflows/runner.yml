@@ -7,28 +7,28 @@ name: runner
 on: push
 
 jobs:
-  raw:
-    name: Build docker-compose 
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - run: |
-            make testdata
-            env SERVER_SRC=./impl-endpoints SERVER=boringssl CLIENT_SRC=./impl-endpoints CLIENT=cloudflare-go docker-compose build
-            env SERVER_SRC=./impl-endpoints SERVER=boringssl CLIENT_SRC=./impl-endpoints CLIENT=cloudflare-go TESTCASE=dc docker-compose up --abort-on-container-exit
-  runner:
-    name: Build and run Go interop runner
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-go@v2
-    - run: make runner
+  # raw:
+  #   name: Build docker-compose 
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - run: |
+  #           make testdata
+  #           env SERVER_SRC=./impl-endpoints SERVER=boringssl CLIENT_SRC=./impl-endpoints CLIENT=cloudflare-go docker-compose build
+  #           env SERVER_SRC=./impl-endpoints SERVER=boringssl CLIENT_SRC=./impl-endpoints CLIENT=cloudflare-go TESTCASE=dc docker-compose up --abort-on-container-exit
+  # runner:
+  #   name: Build and run Go interop runner
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: actions/setup-go@v2
+  #   - run: make runner
   pyrunner:
     name: Run Python interop runner
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: python3 runner.py
+    - run: make pyruner
   # run:
   #   needs: [ build ]
   #   name: Run tests
