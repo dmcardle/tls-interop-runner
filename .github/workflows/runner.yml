@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - users: actions/checkout@v2
-    - run: python runner.py
+    - run: python3 runner.py
   # run:
   #   needs: [ build ]
   #   name: Run tests
