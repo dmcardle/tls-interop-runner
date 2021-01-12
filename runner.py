@@ -1,4 +1,5 @@
 import sys
+import time
 import logging
 import subprocess
 
@@ -28,6 +29,8 @@ server_output = subprocess.run( # Popen(
     cmd, shell=True, stdout=sys.stdout, stderr=subprocess.STDOUT
 )
 print(server_output)
+
+time.sleep(5)
 
 cmd = (
     "SERVER_SRC=" + "./impl-endpoints" + " "
