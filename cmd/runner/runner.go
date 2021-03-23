@@ -87,6 +87,10 @@ func main() {
 		if *buildServices {
 			log.Printf("Building %s client and %s server.\n", client.name, server.name)
 			cmd := exec.Command("docker-compose", "build")
+			if *verboseMode {
+				cmd.Stdout = log.Writer()
+				cmd.Stderr = log.Writer()
+			}
 			env := os.Environ()
 			if client.regression {
 				env = append(env, "CLIENT_SRC=regression-endpoints")

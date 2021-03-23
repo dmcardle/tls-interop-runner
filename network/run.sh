@@ -17,8 +17,8 @@ ifconfig eth1 promisc
 # Drop those to make sure they actually take the path through ns3.
 iptables -A FORWARD -i eth0 -o eth1 -j DROP
 iptables -A FORWARD -i eth1 -o eth0 -j DROP
-ip6tables -A FORWARD -i eth0 -o eth1 -j DROP
-ip6tables -A FORWARD -i eth1 -o eth0 -j DROP
+#ip6tables -A FORWARD -i eth0 -o eth1 -j DROP
+#ip6tables -A FORWARD -i eth1 -o eth0 -j DROP
 
 ./scratch/simple-p2p --delay=15ms --bandwidth=10Mbps --queue=25 &
 
