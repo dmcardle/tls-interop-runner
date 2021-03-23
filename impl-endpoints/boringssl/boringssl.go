@@ -80,7 +80,6 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	var testCaseArgs []string
 	role, ok := os.LookupEnv("ROLE")
 	if !ok {
 		log.Fatalf("ROLE not found in env")
@@ -89,15 +88,22 @@ func main() {
 	if !ok {
 		log.Fatalln("TESTCASE not found in env")
 	}
+	log.Println("Running BoringSSL server.")
+	log.Println("Role:", role)
+	log.Println("Test case:", testCase)
 
+	// Convert the pregenerated ECHConfig and key into friendly formats.
 	tmpECHConfigPath, err := extractOneECHConfig("/test-inputs/ech_configs")
 	if err != nil {
-		log.Println("could not extract ECHConfig:", err)
+		log.Fatalln("could not extract ECHConfig:", err)
 	}
 	tmpECHServerKeyPath, err := extractECHServerKey("/test-inputs/ech_key")
 	if err != nil {
-		log.Println("could not extract ECH server key:", err)
+		log.Fatalln("could not extract ECH server key:", err)
 	}
+
+	// Start constructing the command to run the BoringSSL server.
+	cmd = exec.Command("bssl", "server", "-accept", "4433")
 
 	switch role {
 	case "client":
@@ -105,31 +111,25 @@ func main() {
 	case "server":
 		switch testCase {
 		case "dc":
-			testCaseArgs = append(testCaseArgs, "-subcert", "/test-inputs/dc.txt")
-			testCaseArgs = append(testCaseArgs, "-cert", "/test-inputs/example.crt")
-			testCaseArgs = append(testCaseArgs, "-key", "/test-inputs/example.key")
+			cmd.Args = append(cmd.Args, "-subcert", "/test-inputs/dc.txt",
+				"-cert", "/test-inputs/example.crt",
+				"-key", "/test-inputs/example.key")
 		case "ech-accept":
-			testCaseArgs = append(testCaseArgs, "-echconfig", tmpECHConfigPath)
-			testCaseArgs = append(testCaseArgs, "-echconfig-key", tmpECHServerKeyPath)
-			testCaseArgs = append(testCaseArgs, "-cert", "/test-inputs/example.crt")
-			testCaseArgs = append(testCaseArgs, "-key", "/test-inputs/example.key")
+			cmd.Args = append(cmd.Args, "-echconfig", tmpECHConfigPath,
+				"-echconfig-key", tmpECHServerKeyPath,
+				"-cert", "/test-inputs/example.crt",
+				"-key", "/test-inputs/example.key")
 		case "ech-reject":
-			testCaseArgs = append(testCaseArgs, "-echconfig", tmpECHConfigPath)
-			testCaseArgs = append(testCaseArgs, "-echconfig-key", tmpECHServerKeyPath)
-			testCaseArgs = append(testCaseArgs, "-cert", "/test-inputs/client-facing.crt")
-			testCaseArgs = append(testCaseArgs, "-key", "/test-inputs/client-facing.key")
+			cmd.Args = append(cmd.Args, "-echconfig", tmpECHConfigPath,
+				"-echconfig-key", tmpECHServerKeyPath,
+				"-cert", "/test-inputs/client-facing.crt",
+				"-key", "/test-inputs/client-facing.key")
 		default:
 			log.Fatalf("TESTCASE=%s not supported\n", testCase)
 		}
 	default:
 		log.Fatalf("ROLE=%s is not supported\n", role)
 	}
-
-	log.Println("Running BoringSSL server.")
-	log.Println("Test case:", testCase)
-
-	cmd = exec.Command("bssl", "server", "-accept", "4433")
-	cmd.Args = append(cmd.Args, testCaseArgs...)
 
 	cmd.Stdout = log.Writer()
 	cmd.Stderr = log.Writer()
